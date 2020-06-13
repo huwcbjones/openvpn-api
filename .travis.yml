@@ -9,9 +9,15 @@ python:
 install:
   - python setup.py install
   - pip install nose black
-script:
-  - black --diff --check .
-  - nosetests --logging-level=DEBUG tests
+jobs:
+  include:
+    - stage: "Code Quality"
+      name: "black"
+      script: black --diff --check .
+    - name: "mypy"
+      script: mymy .
+    - stage: "Unit tests"
+      script: nosetests --logging-level=DEBUG tests
 deploy:
   provider: pypi
   skip_existing: true
