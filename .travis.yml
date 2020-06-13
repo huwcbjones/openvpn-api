@@ -8,14 +8,14 @@ python:
   - "nightly"
 install:
   - python setup.py install
-  - pip install nose black
+  - pip install nose black mypy
 jobs:
   include:
     - stage: "Code Quality"
       name: "black"
       script: black --diff --check .
     - name: "mypy"
-      script: mymy .
+      script: mypy .
     - stage: "Unit tests"
       script: nosetests --logging-level=DEBUG tests
 deploy:
